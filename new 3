@@ -1,0 +1,83 @@
+var friends = API.friends.get({
+	"user_id": '6492',
+	"order": "name",
+	"count": '5',
+	"offset": '0'
+}).items;
+
+var size = friends.length;
+var count = 0;
+var ismember = null;
+
+while(count < size){
+if((count+500)>size){
+	ismember = API.groups.isMember({
+	"group_id": '111905078',
+	"user_ids": friends.slice(count, size),
+	"extended": '0'
+	});
+}else{
+	ismember = ismember + API.groups.isMember({
+	"group_id": '111905078',
+	"user_ids": friends.slice(count, count+500),
+	"extended": '0'
+	});
+}
+count=count+500;
+}
+
+return ismember;
+
+
+
+var friends = API.friends.get({
+	"user_id": '6492',
+	"order": "name",
+	"count": '5',
+	"offset": '0'
+}).items;
+var usmem="";
+var num = 0;
+
+while(num<friends.size){
+usmem=usmem+friends[num];
+num=num+1;
+}
+return usmem;
+var ismember = API.groups.isMember({
+	"group_id": '111905078',
+	"user_ids": friends.slice(0, 4),
+	"extended": '0'
+	}).items;
+	
+return ismember;
+
+return (friends.slice(0, 4)).join(',');
+
+arr.slice([count], [count+500]);
+
+var friends = API.friends.get({
+	"user_id": '6492',
+	"order": "name",
+	"count": '5',
+	"offset": '0'
+}).items;
+var usmem="";
+
+usmem=friends[0]+","+friends[1];
+
+
+var friends = API.friends.get({
+	"user_id": '6492',
+	"order": "name",
+	"count": '5',
+	"offset": '0'
+}).items;
+
+var ismember = API.groups.isMember({
+	"group_id": '111905078',
+	"user_ids": friends.slice(0, 4),
+	"extended": '0'
+	})@.user_id;
+
+return ismember ;
