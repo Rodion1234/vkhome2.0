@@ -90,22 +90,28 @@ public class UserDataVKAPI {
 
     public int getCountMembers(String groupId) {
         GetMembersResponse gmr = null;
-        try {
-            gmr = Authorization.initVkApiClient()
-                    .groups()
-                    .getMembers(Authorization.initUserActor())
-                    .groupId(groupId)
-                    .sort(GroupsGetMembersSort.ID_ASC)
-                    .offset(0)
-                    .count(0)
-                    .execute();
-        } catch (ApiException ex) {
-            System.out.println("Too many requests per second (6): Too many requests per second");
-        } catch (ClientException ex) {
-            Logger.getLogger(UserDataVKAPI.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        while (gmr == null) {
+            try {
 
-        return gmr.getCount();
+                gmr = Authorization.initVkApiClient()
+                        .groups()
+                        .getMembers(Authorization.initUserActor())
+                        .groupId(groupId)
+                        .sort(GroupsGetMembersSort.ID_ASC)
+                        .offset(0)
+                        .count(0)
+                        .execute();
+            } catch (ApiException ex) {
+                System.out.println("Too many requests per second (6): Too many requests per second");
+            } catch (ClientException ex) {
+                Logger.getLogger(UserDataVKAPI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (gmr != null) {
+            return gmr.getCount();
+        } else {
+            return 0;
+        }
     }
 
     public List<Integer> getFriends(Integer userId) {
